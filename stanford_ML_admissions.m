@@ -15,10 +15,6 @@ initial_theta = zeros(n + 1, 1);
 options = optimset('GradObj', 'on', 'MaxIter', 400);
 [theta, cost] = fminunc(@(t)(costFunction(t, X, y, m)), initial_theta, options);
 
-
-
-
-
 % single prediction
 x = [1 ; 45 ; 85];
 prob = sigmoid(theta'*x)
@@ -27,6 +23,26 @@ prob = sigmoid(theta'*x)
 probTrain = sigmoid(X*theta);
 predictionsTrain = round(probTrain);
 fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
+
+
+
+
+
+% polynomial logistic regression
+degree = 2;
+Xpoly = polynomialExpand_2feature(X, degree);
+
+nPoly = size(Xpoly, 2);
+thetaPoly = zeros(nPoly, 1);
+
+% minimize polynomial cost function
+options = optimset('GradObj', 'on', 'MaxIter', 400);
+[thetaPoly, costPoly] = fminunc(@(t)(costFunction(t, Xpoly, y, m)), thetaPoly, options);
+
+% polynomial training accuracy
+probTrainPoly = sigmoid(Xpoly*thetaPoly);
+predictionsTrainPoly = round(probTrainPoly);
+fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrainPoly == y)) * 100);
 
 
 
