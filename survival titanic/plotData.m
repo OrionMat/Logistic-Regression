@@ -4,7 +4,7 @@ function plotData(X, y)
   pos = find(y == 1); 
   neg = find(y == 0);
 
-  feat123 = [X(:,2), X(:,3), X(:,4)]
+  feat123 = [X(:,2), X(:,3), X(:,4)];
 
   Xpos = feat123(pos, :);
   Xneg = feat123(neg, :);
