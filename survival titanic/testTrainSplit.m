@@ -9,4 +9,5 @@ function [Xtrain, ytrain, Xtest, ytest] = testTrainSplit (data, m, training_spli
   ytrain = data(training_idxs, end);
   Xtest = data(testing_idxs, 1:end-1); 
   ytest = data(testing_idxs, end); 
+  
 endfunction

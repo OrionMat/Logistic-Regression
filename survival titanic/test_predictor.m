@@ -18,11 +18,6 @@ Xtrain = [ones(m, 1) Xtrain]; % add bias
 Xtest = [ones(mTest, 1) Xtest]; % add bias
 lambda = 0
 
-
-
-
-
-
 % initial cost and training accuracy
 initial_theta = zeros(n + 1, 1);
 [J, ~] = costFunction_Reg (initial_theta, Xtrain, ytrain, m, n, lambda)
@@ -30,16 +25,15 @@ probTrain = sigmoid(Xtrain*initial_theta);
 predictionsTrain = round(probTrain);
 fprintf('Initial Train Accuracy: %f%%\n', mean(double(predictionsTrain == ytrain)) * 100);
 
-
 % train predictor
 [theta, cost] = trainLogisticClassifier_Reg(Xtrain, ytrain, m, n, lambda)
 
-
-% trained cost, training and test accuracy
+% trained cost and training accuracy
 probTrain = sigmoid(Xtrain*theta);
 predictionsTrain = round(probTrain);
 fprintf('Fitted Train Accuracy: %f%%\n', mean(double(predictionsTrain == ytrain)) * 100);
 
+% test accuracy
 probTest = sigmoid(Xtest*theta);
 predictionsTest = round(probTest);
 fprintf('Fitted Test Accuracy: %f%%\n', mean(double(predictionsTest == ytest)) * 100);

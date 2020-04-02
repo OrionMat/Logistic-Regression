@@ -17,10 +17,16 @@ initial_theta = zeros(n + 1, 1);
 [J, ~] = costFunction_Reg (initial_theta, X, y, m, n, lambda)
 probTrain = sigmoid(X*initial_theta);
 predictionsTrain = round(probTrain);
-fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
+fprintf('Initial Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
 
 % trained predictor
 [theta, cost] = trainLogisticClassifier_Reg(X, y, m, n, lambda)
+
+% initial cost and accuracy
+probTrain = sigmoid(X*theta);
+predictionsTrain = round(probTrain);
+fprintf('Fitted Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
+
 
 % make prediction
 x = [1; 1; 1; 30; 0; 0; 9] % [bias; Pclass;	Sex; Age;	SibSp; Parch;	Fare]
