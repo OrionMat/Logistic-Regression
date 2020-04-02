@@ -6,43 +6,28 @@ data = load('student_admissions.txt');
 X = data(:, 1:end-1); 
 y = data(:, end);
 [m, n] = size(X);
-
-% add bias and initialise theta
+% add bias
 X = [ones(m, 1) X];
-initial_theta = zeros(n + 1, 1);
 
-% minimize cost function
-options = optimset('GradObj', 'on', 'MaxIter', 400);
-[theta, cost] = fminunc(@(t)(costFunction(t, X, y, m)), initial_theta, options);
-
-% single prediction
-x = [1 ; 45 ; 85];
-prob = sigmoid(theta'*x)
-
-% training accuracy
-probTrain = sigmoid(X*theta);
-predictionsTrain = round(probTrain);
-fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
+% train linear logistic classifier
+[theta, cost] = trainLogisticClassifier(X, y, m, n);
 
 
 
+% train qudratic logistic classifier
+degreeQuad = 2;
+Xquad = polynomialExpand_2feature(X(:,2), X(:,3), degreeQuad);
+nQuad = size(Xquad, 2)-1;
+[thetaQuad, costQuad] = trainLogisticClassifier(Xquad, y, m, nQuad);
 
 
-% polynomial logistic regression
-degree = 2;
-Xpoly = polynomialExpand_2feature(X, degree);
 
-nPoly = size(Xpoly, 2);
-thetaPoly = zeros(nPoly, 1);
+% train Nth order logistic classifier
+degreeN = 4;
+XN = polynomialExpand_2feature(X(:,2), X(:,3), degreeN);
+nN = size(XN, 2)-1;
+[thetaN, costN] = trainLogisticClassifier(XN, y, m, nN);
 
-% minimize polynomial cost function
-options = optimset('GradObj', 'on', 'MaxIter', 400);
-[thetaPoly, costPoly] = fminunc(@(t)(costFunction(t, Xpoly, y, m)), thetaPoly, options);
-
-% polynomial training accuracy
-probTrainPoly = sigmoid(Xpoly*thetaPoly);
-predictionsTrainPoly = round(probTrainPoly);
-fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrainPoly == y)) * 100);
 
 
 
@@ -52,18 +37,36 @@ fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrainPoly == y)) * 100)
 
 figure 1;
 % figure 1 subplot 1: raw data
-subplot(1,2,1); 
+subplot(2,2,1); 
 hold on
 plotData(X(:, 2:end), y);
 xlabel('Exam 1 score')
 ylabel('Exam 2 score')
-legend('Admitted', 'Not admitted', 'location', 'southwest')
+%legend('Admitted', 'Not admitted', 'location', 'southwest')
 
 % figure 1 subplot 2: linear descision boundry
-subplot(1,2,2);
+subplot(2,2,2);
 hold on
 plotData(X(:, 2:end), y);
 descisionBoundry_2feature(theta, X, y);  
-legend('Admitted', 'Not admitted', 'Decision Boundary', 'location', 'southwest')
+%legend('Admitted', 'Not admitted', 'Decision Boundary', 'location', 'southwest')
+xlabel('Exam 1 score')
+ylabel('Exam 2 score')
+
+% figure 1 subplot 3: quadratic descision boundry
+subplot(2,2,3);
+hold on
+plotData(X(:, 2:end), y);
+descisionBoundry_Nfeature(thetaQuad, degreeQuad);  
+%legend('Admitted', 'Not admitted', 'Decision Boundary', 'location', 'southwest')
+xlabel('Exam 1 score')
+ylabel('Exam 2 score')
+
+% figure 1 subplot 4: Nth descision boundry
+subplot(2,2,4);
+hold on
+plotData(X(:, 2:end), y);
+descisionBoundry_Nfeature(thetaN, degreeN);  
+%legend('Admitted', 'Not admitted', 'Decision Boundary', 'location', 'southwest')
 xlabel('Exam 1 score')
 ylabel('Exam 2 score')

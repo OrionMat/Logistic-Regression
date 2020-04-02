@@ -1,8 +1,6 @@
-function Xpoly = polynomialExpand_2feature(X, degree)
+function Xpoly = polynomialExpand_2feature(feat1, feat2, degree)
   
-  feat1 = X(:, 2);
-  feat2 = X(:, 3);
-  Xpoly(:,1) = X(:,1);
+  Xpoly = ones(size(feat1(:,1)));
   
   for i = 1:degree
     for j = 0:i
