@@ -1,10 +1,20 @@
 function plotData(X, y)
 
-% find indices of positive and negative Examples
-pos = find(y == 1); 
-neg = find(y == 0);
+  % find indices of positive and negative Examples
+  pos = find(y == 1); 
+  neg = find(y == 0);
 
-plot(X(pos, 1), X(pos, 2), 'r+','LineWidth', 3, 'MarkerSize', 10);
-plot(X(neg, 1), X(neg, 2), 'bo', 'LineWidth', 3,'MarkerSize', 7);
+  feat123 = [X(:,2), X(:,3), X(:,4)]
+
+  Xpos = feat123(pos, :);
+  Xneg = feat123(neg, :);
+
+  figure 1;
+  scatter3(Xpos(:, 1), Xpos(:, 2), Xpos(:, 3), 'r', '+');
+  hold on
+  scatter3(Xneg(:, 1), Xneg(:, 2), Xneg(:, 3), 'b');
+  xlabel('Pclass');
+  ylabel('Sex: male=1, female=0');
+  zlabel('Age');
 
 end

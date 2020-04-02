@@ -13,6 +13,20 @@ clear data
 
 % regularized logistic regression
 lambda = 0
+
+% initial predictor
 initial_theta = zeros(n + 1, 1);
-[J, ~] = costFunction_Reg (initial_theta, X, y, m, n, lambda) % initial cost
+[J, ~] = costFunction_Reg (initial_theta, X, y, m, n, lambda)
+% training accuracy
+probTrain = sigmoid(X*initial_theta);
+predictionsTrain = round(probTrain);
+fprintf('Train Accuracy: %f%%\n', mean(double(predictionsTrain == y)) * 100);
+
+% trained predictor
 [theta, cost] = trainLogisticClassifier_Reg(X, y, m, n, lambda)
+
+
+
+
+% plots
+plotData(X, y);
