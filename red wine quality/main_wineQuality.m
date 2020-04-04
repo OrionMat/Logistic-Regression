@@ -31,12 +31,10 @@ fprintf('Initial training accuracy: %f%%\n', mean(double(p == y)) * 100);
 % trained training accuracy
 probsTrain = sigmoid(X*allTheta');
 [_, p] = max(probsTrain, [], 2);
-fprintf('Trained training accuracy: %f\n', mean(double(p == y)) * 100);
+fprintf('Fitted training accuracy:  %f%%\n', mean(double(p == y)) * 100);
 
-
-
-##% test accuracy
-##probTest = sigmoid(Xtest*theta);
-##predictionsTest = round(probTest);
-##fprintf('Fitted Test Accuracy: %f%%\n', mean(double(predictionsTest == ytest)) * 100);
+% test accuracy
+probsTest = sigmoid(Xtest*allTheta');
+[_, pTest] = max(probsTest, [], 2);
+fprintf('Fitted test accuracy: %f%%\n', mean(double(pTest == ytest)) * 100);
 
