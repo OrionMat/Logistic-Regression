@@ -4,6 +4,12 @@ clc;
 
 load('digits.mat'); % data stored in arrays X, y
 
+
+% randomly split into testing and training sets
+m = size(X, 1);
+training_split = 0.7;
+[X, y, Xtest, ytest] = testTrainSplit([X y], m, training_split);
+
 % important variables
 num_labels = 10;    % 1 to 10
 [m, n] = size(X);
@@ -29,6 +35,11 @@ rand_indices = randperm(m);
 sel = X(rand_indices(1:100), 2:end);
 displayDigits(sel);
 
-
+% test accuracy
+mTest = length(ytest);
+Xtest = [ones(mTest, 1) Xtest]; % add bias
+probsTest = sigmoid(Xtest*allTheta');
+[_, pTest] = max(probsTest, [], 2);
+fprintf('Fitted test accuracy: %f%%\n', mean(double(pTest == ytest)) * 100);
 
 

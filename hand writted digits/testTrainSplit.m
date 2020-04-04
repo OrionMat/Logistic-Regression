@@ -11,15 +11,3 @@ function [Xtrain, ytrain, Xtest, ytest] = testTrainSplit (data, m, training_spli
   ytest = data(testing_idxs, end); 
   
 endfunction
-
-
-% randomly split into testing and training sets
-##m = size(X, 1);
-##training_split = 0.7;
-##[X, y, Xtest, ytest] = testTrainSplit(X, m, training_split);
-##mTest = length(ytest);
-##Xtest = [ones(mTest, 1) Xtest]; % add bias
-##% test accuracy
-##probsTest = sigmoid(Xtest*allTheta');
-##[_, pTest] = max(probsTest, [], 2);
-##fprintf('Fitted test accuracy: %f%%\n', mean(double(pTest == ytest)) * 100);
